@@ -15,14 +15,15 @@
 https://freeapi.aivvm.com/
 ```
 
-例如，要使用 `gpt-3.5-turbo` 模型回答 "Hello, how are you?"，请发送以下 `curl` 命令：
+例如，要使用 `gpt-3.5-turbo` 模型回答 "你好?"，请发送以下 `curl` 命令：
 
 ```sh
-curl https://freeapi.aivvm.com/v1/ \
+curl https://freeapi.aivvm.com/v1/chat/completions \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer sk-free-api' \
   -d '{
-  "model": "gpt-3.5-turbo",
-  "messages": [{"role": "user", "content": "Hello, how are you?"}]
+      "model": "gpt-3.5-turbo",
+      "messages": [{"role": "user", "content": "你好?"}]
 }'
 ```
 
@@ -58,19 +59,10 @@ ChatGPT API 是一个强大的工具，允许开发人员将 ChatGPT 模型集�
 
 ## 赞助我！
 
-如果您发现免费 ChatGPT API 版有用，请考虑在 GitHub 上[赞助作者](https://github.com/sponsors/ayaka14732)，以支持持续的开发和维护。您的支持将帮助她维护此项目，并继续使人工智能技术对所有人都可访问。谢谢您的支持！
+如果您发现免费 ChatGPT API 版有用，请考虑在 GitHub 上[赞助作者](https://github.com/CaoYunzhou/chatgpt-freeapi)，以支持持续的开发和维护。您的支持将帮助她维护此项目，并继续使人工智能技术对所有人都可访问。谢谢您的支持！
 
 <table>
   <tr>
-    <th>Ko-fi</th>
-    <td><a href="https://ko-fi.com/freechatgpt"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Ko-fi"></a></td>
-  </tr>
-  <tr>
-    <th>支付宝</th>
-    <td><img src="https://ayaka14732.github.io/sponsor/alipay.jpg" alt="支付宝" width="150"></td>
-  </tr>
-  <tr>
-    <th>微信</th>
-    <td><img src="https://ayaka14732.github.io/sponsor/wechat.png" alt="微信" width="150"></td>
+    <td><img src="./img/alipay.png" alt="支付宝" width="150"></td>
   </tr>
 </table>
