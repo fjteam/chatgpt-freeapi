@@ -16,18 +16,40 @@ https://freeapi.aivvm.com/
 ```
 
 例如，要使用 `gpt-3.5-turbo` 模型回答 "你好?"，请发送以下 `curl` 命令：
+- 官方例子
+  ```sh
+  curl https://api.openai.com/v1/chat/completions \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer sk-xxxxx' \
+    -d '{
+        "model": "gpt-3.5-turbo",
+        "messages": [{"role": "user", "content": "你好?"}]
+  }'
+  ```
 
-```sh
-curl https://freeapi.aivvm.com/v1/chat/completions \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer sk-free-api' \
-  -d '{
-      "model": "gpt-3.5-turbo",
-      "messages": [{"role": "user", "content": "你好?"}]
-}'
-```
+- 参考用法
+  ```sh
+  curl https://freeapi.aivvm.com/v1/chat/completions \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer sk-free-api' \
+    -d '{
+        "model": "gpt-3.5-turbo",
+        "messages": [{"role": "user", "content": "你好?"}]
+  }'
+  ```
 
-您可以在 [OpenAI 官方文档](https://platform.openai.com/docs/api-reference/chat/create)上阅读完整的 API 文档。
+- 支持的模型[**CHAT**]
+
+  |模型| RPM | TPM |
+  |-------|-------|-------|
+  |gpt-3.5-turbo	| 3,500	|90,000|
+  |gpt-3.5-turbo-0301|	3,500	|90,000|
+  |gpt-3.5-turbo-0613	|3,500|	90,000|
+  |gpt-3.5-turbo-16k	|3,500	|180,000|
+  |gpt-3.5-turbo-16k-0613|	3,500	|180,000|
+
+
+- 您可以在 [OpenAI 官方文档](https://platform.openai.com/docs/api-reference/chat/create)上阅读完整的 API 文档。
 
 ## 介绍
 
