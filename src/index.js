@@ -71,6 +71,10 @@ const handlePost = async (req, res) => {
       headers: requestHeader,
       body: JSON.stringify(req.body),
     });
+    // 获取和打印响应体
+    const responseBody = await resUpstream.clone().text();
+    console.log('[+] Response body:', responseBody);
+
     console.log('[+] Response status:', resUpstream.status);
     console.log('[+] Response headers:', resUpstream.headers);
   
