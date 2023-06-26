@@ -35,6 +35,16 @@ const handleOptions = (req, res) => {
 };
 
 const handlePost = async (req, res) => {
+  // 打印请求头部和body
+  console.log('Request headers:', req.headers);
+  console.log('Request body:', req.body);
+
+  const userAuth = req.get('Authorization');
+  if (!userAuth || userAuth !== 'Bearer sk-free-api') {
+    console.log('Unauthorized attempt detected');
+    return res.status(401).set(corsHeaders).type('text/plain').send('Unauthorized. Please provide correct Authorization header.');
+  }
+
   const contentType = req.headers['content-type'];
   if (!contentType || contentType !== 'application/json') {
     return res.status(415).set(corsHeaders).type('text/plain').send("Unsupported media type. Use 'application/json' content type");
@@ -54,12 +64,16 @@ const handlePost = async (req, res) => {
       'Authorization': authHeaderUpstream,
       'User-Agent': 'curl/7.64.1',
     };
+    console.log('Outgoing request headers:', requestHeader);
+
     const resUpstream = await fetch(upstreamUrl, {
       method: 'POST',
       headers: requestHeader,
       body: JSON.stringify(req.body),
     });
-
+    console.log('Response status:', resUpstream.status);
+    console.log('Response headers:', resUpstream.headers);
+  
     if (!resUpstream.ok) {
       const { status } = resUpstream;
       const text = await resUpstream.text();
