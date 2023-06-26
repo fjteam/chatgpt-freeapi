@@ -36,12 +36,12 @@ const handleOptions = (req, res) => {
 
 const handlePost = async (req, res) => {
   // 打印请求头部和body
-  console.log('Request headers:', req.headers);
-  console.log('Request body:', req.body);
+  console.log('[+] Request headers:', req.headers);
+  console.log('[+] Request body:', req.body);
 
   const userAuth = req.get('Authorization');
   if (!userAuth || userAuth !== 'Bearer sk-free-api') {
-    console.log('Unauthorized attempt detected');
+    console.log('[+] Unauthorized attempt detected');
     return res.status(401).set(corsHeaders).type('text/plain').send('Unauthorized. Please provide correct Authorization header.');
   }
 
@@ -57,22 +57,22 @@ const handlePost = async (req, res) => {
 
   try {
 
-    const authHeaderUpstream = authHeader || `Bearer ${randomChoice(api_keys)}`;
+    const authHeaderUpstream = `Bearer ${randomChoice(api_keys)}`;
 
     const requestHeader = {
       'Content-Type': 'application/json',
       'Authorization': authHeaderUpstream,
       'User-Agent': 'curl/7.64.1',
     };
-    console.log('Outgoing request headers:', requestHeader);
+    console.log('[+] Outgoing request headers:', requestHeader);
 
     const resUpstream = await fetch(upstreamUrl, {
       method: 'POST',
       headers: requestHeader,
       body: JSON.stringify(req.body),
     });
-    console.log('Response status:', resUpstream.status);
-    console.log('Response headers:', resUpstream.headers);
+    console.log('[+] Response status:', resUpstream.status);
+    console.log('[+] Response headers:', resUpstream.headers);
   
     if (!resUpstream.ok) {
       const { status } = resUpstream;
@@ -113,5 +113,5 @@ app.use('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`[+] Server listening on port ${port}`);
 });
