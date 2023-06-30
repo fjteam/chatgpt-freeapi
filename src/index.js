@@ -73,7 +73,7 @@ const handlePost = async (req, res) => {
       body: JSON.stringify(req.body),
     });
     // 获取和打印响应体
-    const responseBody = await resUpstream.clone().text();
+    // const responseBody = await resUpstream.clone().text();
     // console.log('[+] Response body:', responseBody);
 
     console.log('[+] Response status:', resUpstream.status);
@@ -102,7 +102,7 @@ const handlePost = async (req, res) => {
       'Cache-Control': 'no-cache',
     });
 
-    resUpstream.body.pipe(res);
+    resUpstream.body.pipe(res.status(200).set(corsHeaders));
   } catch (error) {
     res.status(500).set(corsHeaders).type('text/plain').send(error.message);
   }
