@@ -15,14 +15,14 @@
 https://freeapi.aivvm.com/
 ```
 
-例如，要使用 `gpt-3.5-turbo` 模型回答 "你好?"，请发送以下 `curl` 命令：
+例如，要使用 `gpt-3.5-turbo-16k-0613` 模型回答 "你好?"，请发送以下 `curl` 命令：
 - 官方例子
   ```sh
   curl https://api.openai.com/v1/chat/completions \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer sk-xxxxx' \
     -d '{
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-3.5-turbo-16k-0613",
         "messages": [{"role": "user", "content": "你好?"}]
   }'
   ```
@@ -33,7 +33,7 @@ https://freeapi.aivvm.com/
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer sk-free-api' \
     -d '{
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-3.5-turbo-16k-0613",
         "messages": [{"role": "user", "content": "你好?"}]
   }'
   ```
