@@ -37,7 +37,7 @@ const handleOptions = (req, res) => {
 const handlePost = async (req, res) => {
   // 打印请求头部和body
   console.log('[+] Request headers:', req.headers);
-  console.log('[+] Request body:', req.body);
+  // console.log('[+] Request body:', req.body);
 
   const userAuth = req.get('Authorization');
   if (!userAuth || userAuth !== 'Bearer sk-free-api') {
@@ -73,7 +73,7 @@ const handlePost = async (req, res) => {
     });
     // 获取和打印响应体
     const responseBody = await resUpstream.clone().text();
-    console.log('[+] Response body:', responseBody);
+    // console.log('[+] Response body:', responseBody);
 
     console.log('[+] Response status:', resUpstream.status);
     console.log('[+] Response headers:', resUpstream.headers);
