@@ -7,6 +7,7 @@ import fetch from 'node-fetch';
 const port = parseInt(process.env.PORT || '8080', 10);
 const api_keys = JSON.parse(process.env.API_KEYS);
 const upstreamUrl = 'https://api.openai.com/v1/chat/completions';
+const models_upstreamUrl = 'https://api.openai.com/v1/models';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -37,7 +38,7 @@ const handleOptions = (req, res) => {
 const handlePost = async (req, res) => {
   // 打印请求头部和body
   console.log('[+] Request headers:', req.headers);
-  // console.log('[+] Request body:', req.body);
+  console.log('[+] Request body:', req.body);
 
   const userAuth = req.get('Authorization');
   if (!userAuth || userAuth !== 'Bearer sk-free-api') {
@@ -107,10 +108,66 @@ const handlePost = async (req, res) => {
   }
 };
 
+const handleGetModels = async (req, res) => {
+  // 打印请求头部和body
+  console.log('[+] Request headers:', req.headers);
+  console.log('[+] Request body:', req.body);
+
+  const userAuth = req.get('Authorization');
+  if (!userAuth || userAuth !== 'Bearer sk-free-api') {
+    console.log('[+] Unauthorized attempt detected');
+    return res.status(401).set(corsHeaders).type('text/plain').send('Unauthorized. Please provide correct Authorization header.');
+  }
+
+  const contentType = req.headers['content-type'];
+  if (!contentType || contentType !== 'application/json') {
+    return res.status(415).set(corsHeaders).type('text/plain').send("Unsupported media type. Use 'application/json' content type");
+  }
+
+  const { stream } = req.body;
+  if (stream != null && stream !== true && stream !== false) {
+    return res.status(400).set(corsHeaders).type('text/plain').send('The `stream` parameter must be a boolean value');
+  }
+
+  try {
+    const authHeaderUpstream = `Bearer ${randomChoice(api_keys)}`;
+
+    const requestHeader = {
+      'Content-Type': 'application/json',
+      'Authorization': authHeaderUpstream,
+      'User-Agent': 'curl/7.64.1',
+    };
+    console.log('[+] Outgoing request headers:', requestHeader);
+
+  
+    const response = await fetch(models_upstreamUrl,{
+      method: 'GET',
+      headers: requestHeader,
+      // body: JSON.stringify(req.body),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch models');
+    }
+
+    const models = await response.json();
+
+    // console.log('[+] Response body:', models);
+    console.log('[+] Response status:', response.status);
+    console.log('[+] Response headers:', response.headers);
+
+    res.status(200).set(corsHeaders).json(models);
+  } catch (error) {
+    res.status(500).set(corsHeaders).type('text/plain').send(error.message);
+  }
+};
+
+
 app.options('/v1/', handleOptions);
 app.post('/v1/', handlePost);
 app.options('/v1/chat/completions', handleOptions);
 app.post('/v1/chat/completions', handlePost);
+app.get('/v1/models', handleGetModels);
+app.options('/v1/models', handleGetModels);
 
 app.use('*', (req, res) => {
   res.status(404).set(corsHeaders).type('text/plain').send('Not found');
